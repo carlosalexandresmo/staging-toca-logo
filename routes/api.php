@@ -13,18 +13,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'api','middleware'=> ['cors']], function() {
-    Route::get('/music_styles/', 'MusicStyleController@index');
-    Route::get('/musicians', 'MusiciansController@index');
+//Route::group(['prefix' => 'api','middleware'=> ['cors']], function() {
+//    Route::get('/music_styles/', 'MusicStyleController@index');
+//    Route::get('/musicians', 'MusiciansController@index');
+//
+//    Route::post('/suggestions', 'SuggestionsController@store');
+//    Route::get('/hirer', 'HirerController@index');
+//    Route::get('/users', 'UsuarioController@index');
+//    Route::post('/users', 'UsuarioController@login');
+//
+//    Route::get('/show', 'ShowAgendaController@index');
+//    Route::get('/show/{id}', 'ClienteController@show');
+//    Route::put('/show/{id}', 'ShowAgendaController@update');
+//    Route::post('/show', 'ShowAgendaController@store');
+//    Route::delete('/show/{id}', 'ShowAgendaController@destroy');
+//});
 
-    Route::post('/suggestions', 'SuggestionsController@store');
-    Route::get('/hirer', 'HirerController@index');
-    Route::get('/users', 'UsuarioController@index');
-    Route::post('/users', 'UsuarioController@login');
+Route::get('/music_styles/', 'MusicStyleController@index');
+Route::get('/musicians', 'MusiciansController@index');
 
-    Route::get('/show', 'ShowAgendaController@index');
-    Route::get('/show/{id}', 'ClienteController@show');
-    Route::put('/show/{id}', 'ShowAgendaController@update');
-    Route::post('/show', 'ShowAgendaController@store');
-    Route::delete('/show/{id}', 'ShowAgendaController@destroy');
-});
+Route::post('/suggestions', 'SuggestionsController@store');
+Route::get('/hirer', 'HirerController@index');
+Route::get('/users', 'UsuarioController@index');
+Route::post('/users', 'UsuarioController@login');
+
+Route::get('/show', 'ShowAgendaController@index');
+Route::get('/show/{id}', 'ClienteController@show');
+Route::put('/show/{id}', 'ShowAgendaController@update');
+Route::post('/show', 'ShowAgendaController@store');
+Route::delete('/show/{id}', 'ShowAgendaController@destroy');
