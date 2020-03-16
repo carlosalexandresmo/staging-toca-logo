@@ -29,7 +29,7 @@ use Illuminate\Http\Request;
 //    Route::delete('/show/{id}', 'ShowAgendaController@destroy');
 //});
 
-Route::get('/music_styles/', 'MusicStyleController@index');
+Route::get('/music_styles', 'MusicStyleController@index');
 Route::get('/musicians', 'MusiciansController@index');
 
 Route::post('/suggestions', 'SuggestionsController@store');
