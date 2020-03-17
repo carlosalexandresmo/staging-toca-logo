@@ -136,7 +136,7 @@ class UsuarioController extends Controller
             Mail::to($email)->send(new TocalogoEmail($data));
             return response()->json(['email'=> $email], 200);
         }else {
-            return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
+            return response()->json(['error' => Response::HTTP_NOT_FOUND], 404);
         }
 
     }
