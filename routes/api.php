@@ -37,6 +37,8 @@ Route::get('/hirer', 'HirerController@index');
 Route::get('/users', 'UsuarioController@index');
 Route::post('/login', 'UsuarioController@login');
 Route::post('/users', 'UsuarioController@store');
+Route::post('/password/reset', 'UsuarioController@recoveryPassword');
+
 
 Route::get('/show', 'ShowAgendaController@index');
 Route::get('/pdf_viewer', 'ShowAgendaController@pdfviewer');

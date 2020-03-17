@@ -4,11 +4,15 @@
     <title></title>
 </head>
 <body>
-    <table>
-
-    </table>
+<table>
+    <tr>
+        <th>Nome</th>
+    </tr>
     @foreach($show as $item)
-        <p>{{$item->artistic_name}}</p>
+        <tr>
+            <td>{{$item->artistic_name}}</td>
+        </tr>
     @endforeach
+</table>
 </body>
 </html>

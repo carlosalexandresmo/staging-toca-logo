@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Hirer;
-use App\User;
 use App\Usuario;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Console\Helper\Helper;
+use App\Mail\TocalogoEmail;
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
@@ -124,9 +122,18 @@ class UsuarioController extends Controller
 
     public function recoveryPassword(Request $request) {
 
-        $email = $request->email;
+        $email          = $request->email;
+        $new_password   = Helpers::randomPassword();
+
         $response = Usuario::where('email' , $email)->where( 'is_musician' , 0)->first();
         if ($response) {
+
+            $nome_completo = $response->name . " " . $response->lastname;
+
+            $data = ['nome' => $nome_completo,
+                    'password' => $new_password];
+
+            Mail::to($email)->send(new TocalogoEmail($data));
             return response()->json(['email'=> $email], 200);
         }else {
             return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
