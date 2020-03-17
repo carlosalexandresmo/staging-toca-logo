@@ -35,10 +35,12 @@ Route::get('/musicians', 'MusiciansController@index');
 Route::post('/suggestions', 'SuggestionsController@store');
 Route::get('/hirer', 'HirerController@index');
 Route::get('/users', 'UsuarioController@index');
-Route::post('/users', 'UsuarioController@login');
+Route::post('/login', 'UsuarioController@login');
+Route::post('/users', 'UsuarioController@store');
 
 Route::get('/show', 'ShowAgendaController@index');
-Route::get('/show/{id}', 'ClienteController@show');
+Route::get('/pdf_viewer', 'ShowAgendaController@pdfviewer');
+Route::get('/show/{id}', 'ShowAgendaController@show');
 Route::put('/show/{id}', 'ShowAgendaController@update');
 Route::post('/show', 'ShowAgendaController@store');
 Route::delete('/show/{id}', 'ShowAgendaController@destroy');

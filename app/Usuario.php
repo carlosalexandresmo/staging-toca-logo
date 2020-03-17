@@ -9,6 +9,8 @@ class Usuario extends Model
     //
     protected $table = 'user';
 
+    protected $fillable = ['id'];
+
     protected $hidden = [
         'id_mailchimp',
         'password',
@@ -22,7 +24,9 @@ class Usuario extends Model
         'json_member'];
 
     public function hirer() {
-        return $this->hasMany('App\Hirer', 'id_user_hirer');
+        return $this->hasMany('App\Hirer', 'id_user_hirer', 'id_user');
     }
+
+    const UPDATED_AT = 'modified_at';
 
 }

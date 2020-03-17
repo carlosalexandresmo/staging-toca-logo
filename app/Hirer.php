@@ -9,4 +9,8 @@ class Hirer extends Model
     //
     protected $table = 'hirer';
 
+    protected $fillable = ['id'];
+
+    const UPDATED_AT = 'modified_at';
+
 }

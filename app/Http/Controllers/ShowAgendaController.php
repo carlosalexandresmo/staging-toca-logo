@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helpers;
 use App\ShowAgenda;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ShowAgendaController extends Controller
 {
@@ -29,6 +30,17 @@ class ShowAgendaController extends Controller
         $show->repeat_event = $request->repeat_event;
         $show->save();
         return $show;
+    }
+
+    public function pdfviewer() {
+
+        $request = request();
+        $token = $request->bearerToken();
+
+        $show = ShowAgenda::where('id_user', '=', $token);
+        $pdf = PDF::loadView('pdf', compact('show'));
+        $b64Doc = chunk_split(base64_encode( $pdf->setPaper('a4')->stream('agenda.pdf')));
+        return response()->json(['data' => $b64Doc ]);
     }
 
     public function show($id) {
