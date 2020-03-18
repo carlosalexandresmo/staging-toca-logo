@@ -16,6 +16,7 @@ class CreateShowAgendasTable extends Migration
         Schema::create('show_agendas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('id_show')->unique();
+            $table->string('id_user_show')->references('id_user')->on('user');
             $table->timestamp('start');
             $table->timestamp('end');
             $table->string('artistic_name');

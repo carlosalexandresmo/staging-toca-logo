@@ -46,3 +46,4 @@ Route::get('/show/{id}', 'ShowAgendaController@show');
 Route::put('/show/{id}', 'ShowAgendaController@update');
 Route::post('/show', 'ShowAgendaController@store');
 Route::delete('/show/{id}', 'ShowAgendaController@destroy');
+Route::get('/public_calendar/{id}', 'ShowAgendaController@publicCalendar');
