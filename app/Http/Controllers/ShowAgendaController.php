@@ -51,10 +51,16 @@ class ShowAgendaController extends Controller
         $request = request();
         $token = $request->bearerToken();
 
-        $show = ShowAgenda::where('id_user', '=', $token);
-        $pdf = PDF::loadView('pdf', compact('show'));
-        $b64Doc = chunk_split(base64_encode( $pdf->setPaper('a4')->stream('agenda.pdf')));
-        return response()->json(['data' => $b64Doc ]);
+        if ($token) {
+
+            $show = ShowAgenda::where('id_user', '=', $token);
+            $pdf = PDF::loadView('pdf', compact('show'));
+            $b64Doc = chunk_split(base64_encode( $pdf->setPaper('a4')->stream('agenda.pdf')));
+            return response()->json(['data' => $b64Doc ]);
+
+        } else {
+            return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
+        }
     }
 
     public function show($id) {
@@ -69,16 +75,25 @@ class ShowAgendaController extends Controller
 
     public function update(Request $request, $id) {
         //
-        $show = ShowAgenda::find($id);
+        $token = $request->bearerToken();
 
-        $show->start = $request->start;
-        $show->end = $request->end;
-        $show->artistic_name = $request->artistic_name;
-        $show->cache = $request->cache;
-        $show->music_style = $request->music_style;
-        $show->repeat_event = $request->repeat_event;
-        $show->save();
-        return $show;
+        if ($token) {
+
+            $show = ShowAgenda::find($id);
+
+            $show->start = $request->start;
+            $show->end = $request->end;
+            $show->artistic_name = $request->artistic_name;
+            $show->cache = $request->cache;
+            $show->music_style = $request->music_style;
+            $show->repeat_event = $request->repeat_event;
+            $show->save();
+            return $show;
+
+        } else {
+            return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
+        }
+
     }
 
     public function destroy($id) {
