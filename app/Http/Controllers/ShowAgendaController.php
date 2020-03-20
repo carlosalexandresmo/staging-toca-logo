@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Hirer;
+use App\MusicStyle;
 use App\ShowAgenda;
 use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 
 class ShowAgendaController extends Controller
 {
@@ -23,7 +25,6 @@ class ShowAgendaController extends Controller
 
     public function store(Request $request) {
         //
-        $request = request();
         $token = $request->bearerToken();
 
         if ($token) {
@@ -122,6 +123,30 @@ class ShowAgendaController extends Controller
         $obj->company_name = $nome;
         $show = ShowAgenda::where('id_user_show', '=', $id_user)->get();
         $obj->events = $show;
+
+        return response()->json($obj, 200);
+    }
+
+    public function report() {
+
+    }
+
+    public function styles() {
+
+        $obj = new \stdClass();
+
+        $styles = DB::table('show_agendas')
+            ->select('music_style.name_style', DB::raw('COUNT(music_style) as total'))
+            ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style')
+            ->groupBy('music_style.name_style')
+            ->get();
+
+        $max = ShowAgenda::whereRaw('cache = (SELECT MAX(`cache`) from show_agendas)')->first();
+        $min= ShowAgenda::whereRaw('cache = (SELECT MIN(`cache`) from show_agendas)')->first();
+
+        $obj->music_style = $styles;
+        $obj->max = $max;
+        $obj->min = $min;
 
         return response()->json($obj, 200);
     }

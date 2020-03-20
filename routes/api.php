@@ -41,9 +41,11 @@ Route::post('/password/reset', 'UsuarioController@recoveryPassword');
 
 
 Route::get('/show', 'ShowAgendaController@index');
-Route::get('/pdf_viewer', 'ShowAgendaController@pdfviewer');
 Route::get('/show/{id}', 'ShowAgendaController@show');
 Route::put('/show/{id}', 'ShowAgendaController@update');
 Route::post('/show', 'ShowAgendaController@store');
 Route::delete('/show/{id}', 'ShowAgendaController@destroy');
+Route::get('/report', 'ShowAgendaController@styles');
+
+Route::get('/pdf_viewer', 'ShowAgendaController@pdfviewer');
 Route::get('/public_calendar/{id}', 'ShowAgendaController@publicCalendar');
