@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Hirer;
-use App\MusicStyle;
 use App\ShowAgenda;
 use App\Usuario;
 use Carbon\Carbon;
@@ -134,47 +133,70 @@ class ShowAgendaController extends Controller
 
     public function styles() {
 
-        $obj = new \stdClass();
+        $request = request();
+        $token = $request->bearerToken();
 
-        $styles = DB::table('show_agendas')
-            ->select('music_style.name_style', DB::raw('COUNT(music_style) as total'))
-            ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style')
-            ->groupBy('music_style.name_style')
-            ->get();
+        if ($token) {
+            $obj = new \stdClass();
 
-        $max = ShowAgenda::whereRaw('cache = (SELECT MAX(`cache`) from show_agendas)')->first();
-        $min= ShowAgenda::whereRaw('cache = (SELECT MIN(`cache`) from show_agendas)')->first();
+            $styles = DB::table('show_agendas')
+                ->select('music_style.name_style', DB::raw('COUNT(music_style) as total'))
+                ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style')
+                ->groupBy('music_style.name_style')
+                ->where('id_user', $token)
+                ->get();
 
-        $obj->music_style = $styles;
-        $obj->max = $max;
-        $obj->min = $min;
+            $max = ShowAgenda::whereRaw('cache = (SELECT MAX(`cache`) from show_agendas)')->first();
+            $min= ShowAgenda::whereRaw('cache = (SELECT MIN(`cache`) from show_agendas)')->first();
 
-        return response()->json($obj, 200);
+            $obj->music_style = $styles;
+            $obj->max = $max;
+            $obj->min = $min;
+
+            return response()->json($obj, 200);
+
+        } else {
+            return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
+        }
+
+
     }
 
     public function filterReport(Request $request) {
 
-        $frequency = $request->query('frequency');
-        $start  = $request->query('start');
-        $end    = $request->query('end');
+        $token = $request->bearerToken();
 
-        if ($frequency) {
-            $response = ShowAgenda::where('repeat_event', $frequency)->get();
-            return response()->json($response, 200);
-        }
+        if ($token) {
 
-        if ($start && $end) {
+            $frequency = $request->query('frequency');
+            $start  = $request->query('start');
+            $end    = $request->query('end');
 
-            $from = Carbon::createFromFormat('d-m-Y', $start)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
+            if ($frequency) {
 
-            $response = ShowAgenda::whereBetween('start', [$from, $to])->get();
-            return response()->json($response, 200);
+                $response = ShowAgenda::where('repeat_event', $frequency)
+                    ->where('id_user', $token)->get();
+                return response()->json($response, 200);
+            }
 
+            if ($start && $end) {
+
+                $from = Carbon::createFromFormat('d-m-Y', $start)->format('Y-m-d');
+                $to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
+
+                $response = ShowAgenda::whereBetween('start', [$from, $to])
+                    ->where('id_user', $token)->get();
+                return response()->json($response, 200);
+
+            } else {
+
+                return response()->json(['erro' => Response::HTTP_NO_CONTENT], 204);
+            }
         } else {
-
-            return response()->json(['erro' => Response::HTTP_NO_CONTENT], 204);
+            return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
         }
+
+
 
 
     }
