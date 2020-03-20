@@ -7,6 +7,7 @@ use App\Hirer;
 use App\MusicStyle;
 use App\ShowAgenda;
 use App\Usuario;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -149,6 +150,33 @@ class ShowAgendaController extends Controller
         $obj->min = $min;
 
         return response()->json($obj, 200);
+    }
+
+    public function filterReport(Request $request) {
+
+        $frequency = $request->query('frequency');
+        $start  = $request->query('start');
+        $end    = $request->query('end');
+
+        if ($frequency) {
+            $response = ShowAgenda::where('repeat_event', $frequency)->get();
+            return response()->json($response, 200);
+        }
+
+        if ($start && $end) {
+
+            $from = Carbon::createFromFormat('d-m-Y', $start)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
+
+            $response = ShowAgenda::whereBetween('start', [$from, $to])->get();
+            return response()->json($response, 200);
+
+        } else {
+
+            return response()->json(['erro' => Response::HTTP_NO_CONTENT], 204);
+        }
+
+
     }
 
 }

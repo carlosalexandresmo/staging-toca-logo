@@ -46,6 +46,7 @@ Route::put('/show/{id}', 'ShowAgendaController@update');
 Route::post('/show', 'ShowAgendaController@store');
 Route::delete('/show/{id}', 'ShowAgendaController@destroy');
 Route::get('/report', 'ShowAgendaController@styles');
+Route::get('/filter', 'ShowAgendaController@filterReport');
 
 Route::get('/pdf_viewer', 'ShowAgendaController@pdfviewer');
 Route::get('/public_calendar/{id}', 'ShowAgendaController@publicCalendar');
