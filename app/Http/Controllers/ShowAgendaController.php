@@ -143,11 +143,14 @@ class ShowAgendaController extends Controller
                 ->select('music_style.name_style', DB::raw('COUNT(music_style) as total'))
                 ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style')
                 ->groupBy('music_style.name_style')
-                ->where('id_user', $token)
+                ->where('id_user_show', $token)
                 ->get();
 
-            $max = ShowAgenda::whereRaw('cache = (SELECT MAX(`cache`) from show_agendas)')->first();
-            $min= ShowAgenda::whereRaw('cache = (SELECT MIN(`cache`) from show_agendas)')->first();
+            $max = ShowAgenda::whereRaw('cache = (SELECT MAX(`cache`) from show_agendas)')
+                ->first();
+
+            $min= ShowAgenda::whereRaw('cache = (SELECT MIN(`cache`) from show_agendas)')
+                ->first();
 
             $obj->music_style = $styles;
             $obj->max = $max;
