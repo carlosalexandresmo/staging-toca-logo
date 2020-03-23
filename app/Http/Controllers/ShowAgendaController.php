@@ -218,7 +218,7 @@ class ShowAgendaController extends Controller
                 $to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
 
                 $response = ShowAgenda::whereBetween('start', [$from, $to])
-                    ->where('id_user', $token)->get();
+                    ->where('id_user_show', $token)->get();
                 return response()->json($response, 200);
 
             } else {
