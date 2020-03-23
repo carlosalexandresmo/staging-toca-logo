@@ -175,10 +175,40 @@ class ShowAgendaController extends Controller
             $start  = $request->query('start');
             $end    = $request->query('end');
 
+            $repeat_event = "";
             if ($frequency) {
 
-                $response = ShowAgenda::where('repeat_event', $frequency)
-                    ->where('id_user', $token)->get();
+                switch ($frequency) {
+                    case 1:
+                        $repeat_event = 'DAILY';
+                    break;
+
+                    case 2:
+                        $repeat_event = 'WEEKLY';
+                        break;
+
+                    case 3:
+                        $repeat_event = 'MONTHLY';
+                        break;
+
+                    case 4:
+                        $repeat_event = 'SEMIANNUAL';
+                        break;
+
+                    case 5:
+                        $repeat_event = 'YEARLY';
+                        break;
+
+                    case 6:
+                        $repeat_event = 'CUSTOM';
+                        break;
+
+                    default:
+                        break;
+                }
+
+                $response = ShowAgenda::where('repeat_event', $repeat_event)
+                    ->where('id_user_show', $token)->get();
                 return response()->json($response, 200);
             }
 
