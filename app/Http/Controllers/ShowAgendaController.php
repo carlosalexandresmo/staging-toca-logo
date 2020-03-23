@@ -214,10 +214,10 @@ class ShowAgendaController extends Controller
 
             if ($start && $end) {
 
-                $from = Carbon::createFromFormat('d-m-Y', $start)->format('Y-m-d');
-                $to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
+                //$from = Carbon::createFromFormat('d-m-Y', $start)->format('Y-m-d');
+                //$to = Carbon::createFromFormat('d-m-Y', $end)->format('Y-m-d');
 
-                $response = ShowAgenda::whereBetween('start', [$from, $to])
+                $response = ShowAgenda::whereBetween('start', [$start, $end])
                     ->where('id_user_show', $token)->get();
                 return response()->json($response, 200);
 
