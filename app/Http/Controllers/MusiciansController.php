@@ -14,7 +14,7 @@ class MusiciansController extends Controller
             ->get();
 
         foreach($musician as $m) {
-            $m->artistic_name = utf8_decode($m->artistic_name);
+            //$m->artistic_name = utf8_decode($m->artistic_name);
         }
 
         return $musician;
