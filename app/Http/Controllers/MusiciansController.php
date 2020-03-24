@@ -17,8 +17,6 @@ class MusiciansController extends Controller
             $m->artistic_name = utf8_decode($m->artistic_name);
         }
         return $musician;
-
-        return response()->json($musician, 200);
     }
 
     public function create() {
