@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Musician;
-use Illuminate\Support\Facades\DB;
 
 class MusiciansController extends Controller
 {
@@ -13,7 +12,13 @@ class MusiciansController extends Controller
         $musician = Musician::where('enabled', 1)
             ->orderBy('artistic_name', 'asc')
             ->get();
+
+        foreach($musician as $m) {
+            $m->artistic_name = utf8_decode($m->artistic_name);
+        }
         return $musician;
+
+        return response()->json($musician, 200);
     }
 
     public function create() {
