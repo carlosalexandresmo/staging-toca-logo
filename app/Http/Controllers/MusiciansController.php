@@ -13,16 +13,7 @@ class MusiciansController extends Controller
             ->orderBy('artistic_name', 'asc')
             ->get();
 
-        $musician = array();
-        foreach($response as $m) {
-            $artistic_name = utf8_decode($m->artistic_name);
-            $musician[] = array(
-              'id_musician' => $m->id_musician,
-              'artistic_name' => $artistic_name
-            );
-        }
-
-        return $musician;
+        return $response;
     }
 
     public function create() {
