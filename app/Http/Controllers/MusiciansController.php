@@ -17,7 +17,7 @@ class MusiciansController extends Controller
         foreach($response as $m) {
             $musician[] = array(
               'id_musician' => $m->id_musician,
-              'artistic_name' => utf8_decode($m->artistic_name)
+              'artistic_name' => utf8_encode($m->artistic_name)
             );
         }
 
