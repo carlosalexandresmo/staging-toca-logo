@@ -6,7 +6,8 @@ use App\Helpers\Helpers;
 use App\Hirer;
 use App\ShowAgenda;
 use App\Usuario;
-use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -29,16 +30,198 @@ class ShowAgendaController extends Controller
 
         if ($token) {
 
-            $show = new ShowAgenda();
-            $show->id_show = Helpers::gen_uuid();
-            $show->id_user_show = $token;
-            $show->start = $request->start;
-            $show->end = $request->end;
-            $show->artistic_name = $request->artistic_name;
-            $show->cache = $request->cache;
-            $show->music_style = $request->music_style;
-            $show->repeat_event = $request->repeat_event;
-            $show->save();
+            $id_user_show   = $token;
+            $start          = $request->start;
+            $end            = $request->end;
+            $artistic_name  = $request->artistic_name;
+            $cache          = $request->cache;
+            $music_style    = $request->music_style;
+            $repeat_event   = $request->repeat_event;
+            $repeat         = $request->repeat;
+
+            $last_date_start = ""; 
+            $last_date_end = "";
+
+            switch ($request->repeat_event) {
+
+                case "1":
+                    $repeat_event = 'DAILY';
+
+                    for ($i = 0; $i < $repeat; $i++):
+
+                        if ($i > 0) {
+                            $start    = date('Y-m-d h:i:s', strtotime('+1 day', strtotime($last_date_start)));
+                            $end      =  date('Y-m-d h:i:s', strtotime('+1 day', strtotime($last_date_end)));
+                        }
+
+                        try {
+
+                            $show                   = new ShowAgenda();
+                            $show->id_show          = Helpers::gen_uuid();
+                            $show->id_user_show     = $id_user_show;
+                            $last_date_start        = $start;
+                            $last_date_end          = $end;
+
+                            $show->start            = $start;
+                            $show->end              = $end;
+                            $show->artistic_name    = $artistic_name;
+                            $show->cache            = $cache;
+                            $show->music_style      = $music_style;
+                            $show->repeat_event     = $repeat_event;
+                            $show->save();
+
+                        } catch (\Exception $exception) {
+                            echo $exception->getMessage();
+                        }
+
+                    endfor;
+
+                    break;
+
+                case "2":
+                    $repeat_event = 'WEEKLY';
+
+                    for ($i = 0; $i < $repeat; $i++):
+
+                        if ($i > 0) {
+                            $start  = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($request->start)));
+                            $end    = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($request->end)));
+                        }
+
+                        try {
+
+                            $show                   = new ShowAgenda();
+                            $show->id_show          = Helpers::gen_uuid();
+                            $show->id_user_show     = $id_user_show;
+                            $last_date_start        = $start;
+                            $last_date_end          = $end;
+
+                            $show->start            = $start;
+                            $show->end              = $end;
+                            $show->artistic_name    = $artistic_name;
+                            $show->cache            = $cache;
+                            $show->music_style      = $music_style;
+                            $show->repeat_event     = $repeat_event;
+                            $show->save();
+
+                        } catch (\Exception $exception) {
+                            echo $exception->getMessage();
+                        }
+
+                    endfor;
+
+                    break;
+
+                case "3":
+                    $repeat_event = 'MONTHLY';
+
+                    for ($i = 0; $i < $repeat; $i++):
+
+                        if ($i > 0) {
+                            $start = date('Y-m-d h:i:s', strtotime('+30 days', strtotime($request->start)));
+                            $end = date('Y-m-d h:i:s', strtotime('+30 days', strtotime($request->end)));
+                        }
+
+                        try {
+
+                            $show                   = new ShowAgenda();
+                            $show->id_show          = Helpers::gen_uuid();
+                            $show->id_user_show     = $id_user_show;
+                            $last_date_start        = $start;
+                            $last_date_end          = $end;
+
+                            $show->start            = $start;
+                            $show->end              = $end;
+                            $show->artistic_name    = $artistic_name;
+                            $show->cache            = $cache;
+                            $show->music_style      = $music_style;
+                            $show->repeat_event     = $repeat_event;
+                            $show->save();
+
+                        } catch (\Exception $exception) {
+                            echo $exception->getMessage();
+                        }
+
+                    endfor;
+
+                    break;
+
+                case "4":
+                    $repeat_event = 'SEMIANNUAL';
+
+                    for ($i = 0; $i < $repeat; $i++):
+
+                        if ($i > 0) {
+                            $start = date('Y-m-d h:i:s', strtotime('+180 days', strtotime($request->start)));
+                            $end = date('Y-m-d h:i:s', strtotime('+180 days', strtotime($request->end)));
+                        }
+
+                        try {
+
+                            $show                   = new ShowAgenda();
+                            $show->id_show          = Helpers::gen_uuid();
+                            $show->id_user_show     = $id_user_show;
+                            $last_date_start        = $start;
+                            $last_date_end          = $end;
+
+                            $show->start            = $start;
+                            $show->end              = $end;
+                            $show->artistic_name    = $artistic_name;
+                            $show->cache            = $cache;
+                            $show->music_style      = $music_style;
+                            $show->repeat_event     = $repeat_event;
+                            $show->save();
+
+                        } catch (\Exception $exception) {
+                            echo $exception->getMessage();
+                        }
+
+                    endfor;
+
+                    break;
+
+                case "5":
+                    $repeat_event = 'YEARLY';
+
+                    for ($i = 0; $i < $repeat; $i++):
+
+                        if ($i > 0) {
+                            $start = date('Y-m-d h:i:s', strtotime('+365 days', strtotime($request->start)));
+                            $end = date('Y-m-d h:i:s', strtotime('+365 days', strtotime($request->end)));
+                        }
+
+                        try {
+
+                            $show                   = new ShowAgenda();
+                            $show->id_show          = Helpers::gen_uuid();
+                            $show->id_user_show     = $id_user_show;
+                            $last_date_start        = $start;
+                            $last_date_end          = $end;
+
+                            $show->start            = $start;
+                            $show->end              = $end;
+                            $show->artistic_name    = $artistic_name;
+                            $show->cache            = $cache;
+                            $show->music_style      = $music_style;
+                            $show->repeat_event     = $repeat_event;
+                            $show->save();
+
+                        } catch (\Exception $exception) {
+                            echo $exception->getMessage();
+                        }
+
+                    endfor;
+
+                    break;
+
+                case 6:
+                    $repeat_event = 'CUSTOM';
+                    break;
+
+                default:
+                    break;
+            }
+
             return $show;
 
         } else {
@@ -125,10 +308,6 @@ class ShowAgendaController extends Controller
         $obj->events = $show;
 
         return response()->json($obj, 200);
-    }
-
-    public function report() {
-
     }
 
     public function styles() {
