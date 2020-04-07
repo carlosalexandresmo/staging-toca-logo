@@ -17,7 +17,33 @@ class ShowAgendaController extends Controller
 {
     public function index() {
         //
-        return ShowAgenda::all();
+        $token = request()->bearerToken();
+
+        if ($token) {
+
+            try {
+                $shows = ShowAgenda::where('id_user_show', $token)->get();
+                return response()->json($shows, Response::HTTP_OK);
+
+            } catch (\Exception $error) {
+                $response = [
+                    'success' => false,
+                    'data' => $error,
+                    'message' => $error->getMessage()
+                ];
+                return response()->json($response, Response::HTTP_BAD_REQUEST);
+            }
+
+        } else {
+            $response = [
+                'success' => false,
+                'data' => "",
+                'message' => "Não Autorizado"
+            ];
+
+            return response()->json($response, Response::HTTP_UNAUTHORIZED);
+        }
+
     }
 
     public function create() {
@@ -39,7 +65,7 @@ class ShowAgendaController extends Controller
             $repeat_event   = $request->repeat_event;
             $repeat         = $request->repeat;
 
-            $last_date_start = ""; 
+            $last_date_start = "";
             $last_date_end = "";
 
             switch ($request->repeat_event) {
