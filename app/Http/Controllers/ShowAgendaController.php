@@ -68,7 +68,7 @@ class ShowAgendaController extends Controller
             $last_date_start = "";
             $last_date_end = "";
 
-            switch ($request->repeat_event) {
+            switch ($repeat_event) {
 
                 case "1":
                     $repeat_event = 'DAILY';
@@ -94,6 +94,7 @@ class ShowAgendaController extends Controller
                             $show->cache            = $cache;
                             $show->music_style      = $music_style;
                             $show->repeat_event     = $repeat_event;
+                            $show->cicle_repeat     = $repeat;
                             $show->save();
 
                         } catch (\Exception $exception) {
@@ -128,6 +129,7 @@ class ShowAgendaController extends Controller
                             $show->cache            = $cache;
                             $show->music_style      = $music_style;
                             $show->repeat_event     = $repeat_event;
+                            $show->cicle_repeat     = $repeat;
                             $show->save();
 
                         } catch (\Exception $exception) {
@@ -162,6 +164,7 @@ class ShowAgendaController extends Controller
                             $show->cache            = $cache;
                             $show->music_style      = $music_style;
                             $show->repeat_event     = $repeat_event;
+                            $show->cicle_repeat     = $repeat;
                             $show->save();
 
                         } catch (\Exception $exception) {
@@ -196,6 +199,7 @@ class ShowAgendaController extends Controller
                             $show->cache            = $cache;
                             $show->music_style      = $music_style;
                             $show->repeat_event     = $repeat_event;
+                            $show->cicle_repeat     = $repeat;
                             $show->save();
 
                         } catch (\Exception $exception) {
@@ -230,6 +234,7 @@ class ShowAgendaController extends Controller
                             $show->cache            = $cache;
                             $show->music_style      = $music_style;
                             $show->repeat_event     = $repeat_event;
+                            $show->cicle_repeat     = $repeat;
                             $show->save();
 
                         } catch (\Exception $exception) {
