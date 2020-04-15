@@ -79,8 +79,8 @@ class ShowAgendaController extends Controller
                     for ($i = 0; $i <= $cicle_repeat; $i++):
 
                         if ($i > 0) {
-                            $start    = date('Y-m-d h:i:s', strtotime('+1 day', strtotime($last_date_start)));
-                            $end      =  date('Y-m-d h:i:s', strtotime('+1 day', strtotime($last_date_end)));
+                            $start    = date('Y-m-d H:i:s', strtotime('+1 day', strtotime($last_date_start)));
+                            $end      = date('Y-m-d H:i:s', strtotime('+1 day', strtotime($last_date_end)));
                         }
 
                         try {
@@ -115,8 +115,8 @@ class ShowAgendaController extends Controller
                     for ($i = 0; $i <= $cicle_repeat; $i++):
 
                         if ($i > 0) {
-                            $start  = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($last_date_start)));
-                            $end    = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($last_date_end)));
+                            $start  = date('Y-m-d H:i:s', strtotime('+7 days', strtotime($last_date_start)));
+                            $end    = date('Y-m-d H:i:s', strtotime('+7 days', strtotime($last_date_end)));
                         }
 
                         try {
@@ -165,8 +165,8 @@ class ShowAgendaController extends Controller
                                 $time_end = '+31 days';
                             }
 
-                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
-                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
+                            $start = date('Y-m-d H:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d H:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
@@ -213,8 +213,8 @@ class ShowAgendaController extends Controller
                         }
 
                         if ($i > 0) {
-                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
-                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
+                            $start = date('Y-m-d H:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d H:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
@@ -262,8 +262,8 @@ class ShowAgendaController extends Controller
 
 
                         if ($i > 0) {
-                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
-                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
+                            $start = date('Y-m-d H:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d H:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
