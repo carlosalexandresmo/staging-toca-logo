@@ -14,15 +14,17 @@ class CreateShowAgendasTable extends Migration
     public function up()
     {
         Schema::create('show_agendas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('id_show')->unique();
             $table->string('id_user_show')->references('id_user')->on('user');
             $table->timestamp('start');
             $table->timestamp('end');
             $table->string('artistic_name');
             $table->double('cache');
-            $table->string('music_style');
-            $table->enum('repeat_event', ['DAILY', 'WEEKLY', 'MONTHLY',]);
+            $table->string('music_style_id');
+            $table->foreign('music_style_id')->references('id_music_style')->on('music_style')
+                ->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('repeat_event', ['DAILY', 'WEEKLY', 'MONTHLY', 'SEMIANNUAL', 'YEARLY', 'CUSTOM']);
             $table->timestamps();
         });
     }
