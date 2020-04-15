@@ -420,8 +420,8 @@ class ShowAgendaController extends Controller
             $obj = new \stdClass();
 
             $styles = DB::table('show_agendas')
-                ->select('music_style.name_style', DB::raw('COUNT(music_style) as total'))
-                ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style')
+                ->select('music_style.name_style', DB::raw('COUNT(music_style_id) as total'))
+                ->leftJoin('music_style', 'music_style.id_music_style', '=', 'show_agendas.music_style_id')
                 ->groupBy('music_style.name_style')
                 ->where('id_user_show', $token)
                 ->get();
@@ -508,8 +508,6 @@ class ShowAgendaController extends Controller
         } else {
             return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
         }
-
-
 
 
     }

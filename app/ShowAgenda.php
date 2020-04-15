@@ -14,7 +14,7 @@ class ShowAgenda extends Model
     ];
 
     public function music_styles() {
-        return $this->hasMany(MusicStyle::class, 'music_style_id');
+        return $this->hasOne(MusicStyle::class, 'id_music_style', 'music_style_id');
     }
 
 }
