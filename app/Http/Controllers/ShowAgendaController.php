@@ -67,13 +67,14 @@ class ShowAgendaController extends Controller
 
             $last_date_start = "";
             $last_date_end = "";
+            $shows = array();
 
             switch ($repeat_event) {
 
                 case "1":
                     $repeat_event = 'DAILY';
 
-                    for ($i = 0; $i < $cicle_repeat; $i++):
+                    for ($i = 0; $i <= $cicle_repeat; $i++):
 
                         if ($i > 0) {
                             $start    = date('Y-m-d h:i:s', strtotime('+1 day', strtotime($last_date_start)));
@@ -96,6 +97,7 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
+                            $shows[] = $show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -108,11 +110,11 @@ class ShowAgendaController extends Controller
                 case "2":
                     $repeat_event = 'WEEKLY';
 
-                    for ($i = 0; $i < $cicle_repeat; $i++):
+                    for ($i = 0; $i <= $cicle_repeat; $i++):
 
                         if ($i > 0) {
-                            $start  = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($request->start)));
-                            $end    = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($request->end)));
+                            $start  = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($last_date_start)));
+                            $end    = date('Y-m-d h:i:s', strtotime('+7 days', strtotime($last_date_end)));
                         }
 
                         try {
@@ -131,6 +133,7 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
+                            $shows[] = $show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -143,11 +146,25 @@ class ShowAgendaController extends Controller
                 case "3":
                     $repeat_event = 'MONTHLY';
 
-                    for ($i = 0; $i < $cicle_repeat; $i++):
+                    for ($i = 0; $i <= $cicle_repeat; $i++):
 
                         if ($i > 0) {
-                            $start = date('Y-m-d h:i:s', strtotime('+30 days', strtotime($request->start)));
-                            $end = date('Y-m-d h:i:s', strtotime('+30 days', strtotime($request->end)));
+
+                            $time_start = '+30 days';
+                            //echo $last_date_start;
+                            $days = intval(date('t', strtotime($last_date_start)));
+                            if ($days == 31) {
+                                $time_start = '+31 days';
+                            }
+
+                            $time_end = '+30 days';
+                            $days = intval(date('t', strtotime($last_date_end)));
+                            if ($days == 31) {
+                                $time_end = '+31 days';
+                            }
+
+                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
@@ -166,6 +183,7 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
+                            $shows[] = $show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -178,11 +196,23 @@ class ShowAgendaController extends Controller
                 case "4":
                     $repeat_event = 'SEMIANNUAL';
 
-                    for ($i = 0; $i < $cicle_repeat; $i++):
+                    for ($i = 0; $i <= $cicle_repeat; $i++):
+
+                        $time_start = '+180 days';
+                        $days = intval(date('t', strtotime($last_date_start)));
+                        if ($days == 31) {
+                            $time_start = '+184 days';
+                        }
+
+                        $time_end = '+180 days';
+                        $days = intval(date('t', strtotime($last_date_end)));
+                        if ($days == 31) {
+                            $time_end = '+184 days';
+                        }
 
                         if ($i > 0) {
-                            $start = date('Y-m-d h:i:s', strtotime('+180 days', strtotime($request->start)));
-                            $end = date('Y-m-d h:i:s', strtotime('+180 days', strtotime($request->end)));
+                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
@@ -201,6 +231,7 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
+                            $shows[] = $show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -213,11 +244,24 @@ class ShowAgendaController extends Controller
                 case "5":
                     $repeat_event = 'YEARLY';
 
-                    for ($i = 0; $i < $cicle_repeat; $i++):
+                    for ($i = 0; $i <= $cicle_repeat; $i++):
+
+                        $time_start = '+365 days';
+                        $days = intval(date('t', strtotime($last_date_start)));
+                        //if ($days == 31) {
+                        //    $time_start = '+184 days';
+                        //}
+
+                        $time_end = '+365 days';
+                        $days = intval(date('t', strtotime($last_date_end)));
+                        //if ($days == 31) {
+                        //    $time_end = '+184 days';
+                        //}
+
 
                         if ($i > 0) {
-                            $start = date('Y-m-d h:i:s', strtotime('+365 days', strtotime($request->start)));
-                            $end = date('Y-m-d h:i:s', strtotime('+365 days', strtotime($request->end)));
+                            $start = date('Y-m-d h:i:s', strtotime($time_start, strtotime($last_date_start)));
+                            $end = date('Y-m-d h:i:s', strtotime($time_end, strtotime($last_date_end)));
                         }
 
                         try {
@@ -236,6 +280,7 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
+                            $shows[] = $show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -245,7 +290,7 @@ class ShowAgendaController extends Controller
 
                     break;
 
-                case 6:
+                case "6":
                     $repeat_event = 'CUSTOM';
 
                     try {
@@ -264,6 +309,7 @@ class ShowAgendaController extends Controller
                         $show->repeat_event     = $repeat_event;
                         $show->cicle_repeat     = $cicle_repeat;
                         $show->save();
+                        $shows[] = $show;
 
                     } catch (\Exception $exception) {
                         echo $exception->getMessage();
@@ -275,7 +321,7 @@ class ShowAgendaController extends Controller
                     break;
             }
 
-            return $show;
+            return response()->json($shows, Response::HTTP_CREATED);
 
         } else {
             return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
