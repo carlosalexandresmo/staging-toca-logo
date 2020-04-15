@@ -22,7 +22,9 @@ class ShowAgendaController extends Controller
         if ($token) {
 
             try {
-                $shows = ShowAgenda::where('id_user_show', $token)->get();
+                $shows = ShowAgenda::where('id_user_show', $token)
+                    ->with('music_styles')
+                    ->get();
                 return response()->json($shows, Response::HTTP_OK);
 
             } catch (\Exception $error) {
@@ -56,14 +58,14 @@ class ShowAgendaController extends Controller
 
         if ($token) {
 
-            $id_user_show   = $token;
-            $start          = $request->start;
-            $end            = $request->end;
-            $artistic_name  = $request->artistic_name;
-            $cache          = $request->cache;
-            $music_style    = $request->music_style;
-            $repeat_event   = $request->repeat_event;
-            $cicle_repeat   = $request->cicle_repeat;
+            $id_user_show       = $token;
+            $start              = $request->start;
+            $end                = $request->end;
+            $artistic_name      = $request->artistic_name;
+            $cache              = $request->cache;
+            $music_style_id     = $request->music_style_id;
+            $repeat_event       = $request->repeat_event;
+            $cicle_repeat       = $request->cicle_repeat;
 
             $last_date_start = "";
             $last_date_end = "";
@@ -93,7 +95,7 @@ class ShowAgendaController extends Controller
                             $show->end              = $end;
                             $show->artistic_name    = $artistic_name;
                             $show->cache            = $cache;
-                            $show->music_style      = $music_style;
+                            $show->music_style_id   = $music_style_id;
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
@@ -129,7 +131,7 @@ class ShowAgendaController extends Controller
                             $show->end              = $end;
                             $show->artistic_name    = $artistic_name;
                             $show->cache            = $cache;
-                            $show->music_style      = $music_style;
+                            $show->music_style_id   = $music_style_id;
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
@@ -179,7 +181,7 @@ class ShowAgendaController extends Controller
                             $show->end              = $end;
                             $show->artistic_name    = $artistic_name;
                             $show->cache            = $cache;
-                            $show->music_style      = $music_style;
+                            $show->music_style_id   = $music_style_id;
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
@@ -227,7 +229,7 @@ class ShowAgendaController extends Controller
                             $show->end              = $end;
                             $show->artistic_name    = $artistic_name;
                             $show->cache            = $cache;
-                            $show->music_style      = $music_style;
+                            $show->music_style_id   = $music_style_id;
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
@@ -276,7 +278,7 @@ class ShowAgendaController extends Controller
                             $show->end              = $end;
                             $show->artistic_name    = $artistic_name;
                             $show->cache            = $cache;
-                            $show->music_style      = $music_style;
+                            $show->music_style_id   = $music_style_id;
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
@@ -305,7 +307,7 @@ class ShowAgendaController extends Controller
                         $show->end              = $end;
                         $show->artistic_name    = $artistic_name;
                         $show->cache            = $cache;
-                        $show->music_style      = $music_style;
+                        $show->music_style_id   = $music_style_id;
                         $show->repeat_event     = $repeat_event;
                         $show->cicle_repeat     = $cicle_repeat;
                         $show->save();
