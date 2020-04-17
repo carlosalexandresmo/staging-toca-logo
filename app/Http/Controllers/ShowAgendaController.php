@@ -364,12 +364,11 @@ class ShowAgendaController extends Controller
         if ($token) {
 
             $show = ShowAgenda::find($id);
-
             $show->start            = $request->start;
             $show->end              = $request->end;
             $show->artistic_name    = $request->artistic_name;
             $show->cache            = $request->cache;
-            $show->music_style      = $request->music_style;
+            $show->music_style_id   = $request->music_style_id;
             $show->repeat_event     = $request->repeat_event;
             $show->cicle_repeat     = $request->cicle_repeat;
             $show->save();
