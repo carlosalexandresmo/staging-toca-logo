@@ -349,8 +349,35 @@ class ShowAgendaController extends Controller
 
     public function show($id) {
         //
-        $show = ShowAgenda::find($id);
-        return $show;
+        $token = request()->bearerToken();
+
+        if ($token) {
+            try {
+                $show = ShowAgenda::find($id)
+                    ->with('music_styles')
+                    ->first();
+
+                return response()->json($show, Response::HTTP_OK);
+
+            } catch (\Exception $error) {
+                $response = [
+                    'success' => false,
+                    'data' => $error,
+                    'message' => $error->getMessage()
+                ];
+                return response()->json($response, Response::HTTP_BAD_REQUEST);
+            }
+
+        } else {
+            $response = [
+                'success' => false,
+                'data' => "",
+                'message' => "Não Autorizado"
+            ];
+
+            return response()->json($response, Response::HTTP_UNAUTHORIZED);
+        }
+
     }
 
     public function edit($id) {
