@@ -431,7 +431,7 @@ class ShowAgendaController extends Controller
         $obj = new \stdClass();
         $obj->id = $id;
         $obj->company_name = $nome;
-        $show = ShowAgenda::where('id_user_show', '=', $id_user)->get();
+        $show = ShowAgenda::where('id_user_show', '=', $id_user)->with('music_styles')->get();
         $obj->events = $show;
 
         return response()->json($obj, 200);
