@@ -6,8 +6,6 @@ use App\Helpers\Helpers;
 use App\Hirer;
 use App\ShowAgenda;
 use App\Usuario;
-use DateInterval;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -337,11 +335,13 @@ class ShowAgendaController extends Controller
         $token = $request->bearerToken();
 
         if ($token) {
-            $show = ShowAgenda::where('id_user', '=', $token);
+            $show = ShowAgenda::with('music_styles')
+                ->where('id_user_show', $token)
+                ->get();
             $pdf = PDF::loadView('pdf', compact('show'));
             $b64Doc = chunk_split(base64_encode( $pdf->setPaper('a4')->stream('agenda.pdf')));
-            return response()->json(['data' => $b64Doc ]);
-
+            return response()->json(['data' => $show ]);
+//            return response()->json($show);
         } else {
             return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
         }
