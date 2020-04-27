@@ -97,7 +97,11 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
-                            $shows[] = $show;
+
+                            $last_show = ShowAgenda::find($show->id)
+                                ->with('music_styles')
+                                ->first();
+                            $shows[] = $last_show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -133,7 +137,11 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
-                            $shows[] = $show;
+
+                            $last_show = ShowAgenda::find($show->id)
+                                ->with('music_styles')
+                                ->first();
+                            $shows[] = $last_show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -183,7 +191,11 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
-                            $shows[] = $show;
+
+                            $last_show = ShowAgenda::find($show->id)
+                                ->with('music_styles')
+                                ->first();
+                            $shows[] = $last_show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -231,7 +243,11 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
-                            $shows[] = $show;
+
+                            $last_show = ShowAgenda::find($show->id)
+                                ->with('music_styles')
+                                ->first();
+                            $shows[] = $last_show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -280,7 +296,11 @@ class ShowAgendaController extends Controller
                             $show->repeat_event     = $repeat_event;
                             $show->cicle_repeat     = $cicle_repeat;
                             $show->save();
-                            $shows[] = $show;
+
+                            $last_show = ShowAgenda::find($show->id)
+                                ->with('music_styles')
+                                ->first();
+                            $shows[] = $last_show;
 
                         } catch (\Exception $exception) {
                             echo $exception->getMessage();
@@ -309,7 +329,11 @@ class ShowAgendaController extends Controller
                         $show->repeat_event     = $repeat_event;
                         $show->cicle_repeat     = $cicle_repeat;
                         $show->save();
-                        $shows[] = $show;
+
+                        $last_show = ShowAgenda::find($show->id)
+                            ->with('music_styles')
+                            ->first();
+                        $shows[] = $last_show;
 
                     } catch (\Exception $exception) {
                         echo $exception->getMessage();
