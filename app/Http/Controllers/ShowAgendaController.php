@@ -340,8 +340,7 @@ class ShowAgendaController extends Controller
                 ->get();
             $pdf = PDF::loadView('pdf', compact('show'));
             $b64Doc = chunk_split(base64_encode( $pdf->setPaper('a4')->stream('agenda.pdf')));
-            return response()->json(['data' => $show ]);
-//            return response()->json($show);
+            return response()->json(['data' => $b64Doc ]);
         } else {
             return response()->json(['error' => Response::HTTP_UNAUTHORIZED], 401);
         }
